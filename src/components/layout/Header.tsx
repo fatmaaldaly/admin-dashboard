@@ -5,7 +5,7 @@ export default function Header() {
   const companyName = "Acme Commerce";
 
   return (
-    <header className="flex h-16 items-center justify-between border-b border-gray-300 bg-white px-6">
+    <header className="flex h-16 items-center justify-between border-b border-gray-300 bg-white px-4 md:px-6">
       {/* left side */}
       <div className="flex flex-col">
         <h1 className="text-lg font-semibold">Overview</h1>
