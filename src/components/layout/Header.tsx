@@ -16,7 +16,7 @@ export default function Header() {
 
       {/* right side */}
 
-      <div className="flex items-center">
+      <div className="flex items-center gap-4">
         {/* search bar */}
         <div className="relative">
           <Search
