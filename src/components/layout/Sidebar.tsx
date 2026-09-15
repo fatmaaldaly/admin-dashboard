@@ -58,7 +58,7 @@ const generalItems = [
 export default function Sidebar() {
   const pathname = usePathname();
   return (
-    <div className="flex h-screen w-65 flex-col border-r border-gray-300 bg-indigo-950 px-6 py-4">
+    <div className="flex h-screen w-65 shrink-0 flex-col md:flex border-r border-gray-300 bg-indigo-950 px-6 py-4">
       <header>
         <div className="flex items-center gap-3">
           <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-blue-600">
