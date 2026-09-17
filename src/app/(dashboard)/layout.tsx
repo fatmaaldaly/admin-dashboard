@@ -1,3 +1,4 @@
+import Header from "@/components/layout/Header";
 import Sidebar from "@/components/layout/Sidebar";
 
 export default function DashboardLayout({
@@ -10,6 +11,7 @@ export default function DashboardLayout({
       <Sidebar />
       {/* give a fixed width to sidebar and let main take all the available space */}
       <main className="flex-1">
+        <Header />
         {children}
       </main>
     </div>
