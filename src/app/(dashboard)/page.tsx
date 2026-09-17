@@ -11,25 +11,11 @@ export default function Home() {
   const {
     data: stats,
     isLoading,
-    error,
+    isError,
   } = useQuery({
     queryKey: ["stats"],
     queryFn: getStats,
   });
-
-  if (isLoading) {
-    return (
-      <div className="grid grid-cols-1 gap-4 p-10 md:grid-cols-2 lg:grid-cols-4">
-        {Array.from({ length: 4 }).map((_, index) => (
-          <StatCardSkeleton key={index} />
-        ))}
-      </div>
-    );
-  }
-
-  if (error) {
-    return <p className="text-red-500">Error loading data</p>;
-  }
 
   const calculateChange = (currentValue: number, previousValue: number) => {
     if (previousValue === 0) {
@@ -39,16 +25,61 @@ export default function Home() {
   };
 
   return (
-    <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4 p-10">
-      {stats?.map((item) => (
-        <StatCard
-          key={item.title}
-          title={item.title}
-          value={item.currentValue}
-          change={calculateChange(item.currentValue, item.previousValue)}
-          format={item.format}
-        />
-      ))}
+    <div className="p-10">
+      <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4">
+        {isLoading ? (
+          <>
+            <StatCardSkeleton />
+            <StatCardSkeleton />
+            <StatCardSkeleton />
+            <StatCardSkeleton />
+          </>
+        ) : isError || !stats ? (
+          <div>Failed to load statistics cards.</div>
+        ) : (
+          <>
+            <StatCard
+              title={stats.totalRevenue.title}
+              value={stats.totalRevenue.currentValue}
+              change={calculateChange(
+                stats.totalRevenue.currentValue,
+                stats.totalRevenue.previousValue,
+              )}
+              format={stats.totalRevenue.format}
+            />
+
+            <StatCard
+              title={stats.orders.title}
+              value={stats.orders.currentValue}
+              change={calculateChange(
+                stats.orders.currentValue,
+                stats.orders.previousValue,
+              )}
+              format={stats.orders.format}
+            />
+
+            <StatCard
+              title={stats.newCustomers.title}
+              value={stats.newCustomers.currentValue}
+              change={calculateChange(
+                stats.newCustomers.currentValue,
+                stats.newCustomers.previousValue,
+              )}
+              format={stats.newCustomers.format}
+            />
+
+            <StatCard
+              title={stats.avgOrderValue.title}
+              value={stats.avgOrderValue.currentValue}
+              change={calculateChange(
+                stats.avgOrderValue.currentValue,
+                stats.avgOrderValue.previousValue,
+              )}
+              format={stats.avgOrderValue.format}
+            />
+          </>
+        )}
+      </div>
     </div>
   );
 }
