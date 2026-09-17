@@ -5,7 +5,7 @@ import axios from "axios";
 
 export async function getStats() {
   const res = await axios.get<StatsData[]>(
-    "https://retoolapi.dev/GhGgrf/stats",
+    "https://retoolapi.dev/OYQ7LP/data",
   );
   return res.data;
 }
