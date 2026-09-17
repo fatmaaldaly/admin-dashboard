@@ -28,7 +28,7 @@ export default function Home() {
   }
 
   if (error) {
-    return <p className="text-red-500">Error fetching data</p>;
+    return <p className="text-red-500">Error loading data</p>;
   }
 
   const calculateChange = (currentValue: number, previousValue: number) => {

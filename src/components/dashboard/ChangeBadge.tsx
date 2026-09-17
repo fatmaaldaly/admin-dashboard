@@ -23,7 +23,7 @@ export default function ChangeBadge({ change }: ChangeBadgeProps) {
         strokeWidth={2.5}
         stroke="currentColor"
         className={`w-3 h-3 transform transition-transform ${
-          isPositive ? "-rotate-45" : "rotate-135"
+          isPositive ? "-rotate-45" : "rotate-45"
         }`}
       >
         <path
