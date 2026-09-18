@@ -8,10 +8,10 @@ import { TrendingUp, Target, Rss, AlertTriangle } from "lucide-react";
 import AnalysisCardSkeleton from "@/components/dashboard/AnalysisCardSkeleton";
 import StatCard from "@/components/dashboard/StatCard";
 import StatCardSkeleton from "@/components/dashboard/StatCardSkeleton";
+import { calculateChange } from "@/utils/calculateChange";
 
 export default function Home() {
-
-    const {
+  const {
     data: stats,
     isLoading,
     isError,
@@ -19,7 +19,7 @@ export default function Home() {
     queryKey: ["stats"],
     queryFn: getStats,
   });
-  
+
   const {
     data: analysis,
     isLoading: isAnalysisLoading,
@@ -29,15 +29,8 @@ export default function Home() {
     queryFn: getAnalysis,
   });
 
-  const calculateChange = (currentValue: number, previousValue: number) => {
-    if (previousValue === 0) {
-      return 0;
-    }
-    return ((currentValue - previousValue) / previousValue) * 100;
-  };
-
   return (
-     <div className="p-10">
+    <div className="p-10">
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4">
         {isLoading ? (
           <>
@@ -92,7 +85,6 @@ export default function Home() {
           </>
         )}
       </div>
-    
 
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4 mt-6">
         {isAnalysisLoading ? (
@@ -164,6 +156,6 @@ export default function Home() {
           </>
         )}
       </div>
-   </div>
+    </div>
   );
 }
