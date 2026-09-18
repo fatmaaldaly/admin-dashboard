@@ -2,41 +2,21 @@
 
 "use client";
 
-import StatCard from "@/components/dashboard/StatCard";
 import { useQuery } from "@tanstack/react-query";
-import { getAnalysis, getStats } from "@/services/dashboardService";
-import StatCardSkeleton from "@/components/dashboard/StatCardSkeleton";
+import { getAnalysis } from "@/services/dashboardService";
 import AnalysisCard from "@/components/dashboard/AnalysisCard";
 import { TrendingUp, Target, Rss, AlertTriangle } from "lucide-react";
+import AnalysisCardSkeleton from "@/components/dashboard/AnalysisCardSkeleton";
 
 export default function Home() {
   const {
-    data: stats,
-    isLoading,
-    error,
+    data: analysis,
+    isLoading: isAnalysisLoading,
+    isError: isAnalysisError,
   } = useQuery({
-    queryKey: ["stats"],
-    queryFn: getStats,
-  });
-
-  const { data: analysis, isLoading: isAnalysisLoading } = useQuery({
     queryKey: ["analysis"],
     queryFn: getAnalysis,
   });
-
-  if (isLoading) {
-    return (
-      <div className="grid grid-cols-1 gap-4 p-10 md:grid-cols-2 lg:grid-cols-4">
-        {Array.from({ length: 4 }).map((_, index) => (
-          <StatCardSkeleton key={index} />
-        ))}
-      </div>
-    );
-  }
-
-  if (error) {
-    return <p className="text-red-500">Error loading data</p>;
-  }
 
   const calculateChange = (currentValue: number, previousValue: number) => {
     if (previousValue === 0) {
@@ -47,39 +27,74 @@ export default function Home() {
 
   return (
     <>
-      <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4 px-10 py-10">
-        {stats?.map((item) => (
-          <StatCard
-            key={item.title}
-            title={item.title}
-            value={item.currentValue}
-            change={calculateChange(item.currentValue, item.previousValue)}
-            format={item.format}
-          />
-        ))}
-      </div>
-
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4 px-10">
         {isAnalysisLoading ? (
-          <div className="grid grid-cols-1 gap-4 p-10 md:grid-cols-2 lg:grid-cols-4">
-            {Array.from({ length: 4 }).map((_, index) => (
-              <StatCardSkeleton key={index} />
-            ))}
-          </div>
+          <>
+            <AnalysisCardSkeleton />
+            <AnalysisCardSkeleton />
+            <AnalysisCardSkeleton />
+            <AnalysisCardSkeleton />
+          </>
+        ) : isAnalysisError || !analysis ? (
+          <div>Failed to load statistics cards.</div>
         ) : (
-          <AnalysisCard
-            title={analysis?.revenueMomentum.title ?? ""}
-            value={analysis?.revenueMomentum.currentValue ?? 0}
-            unit={"currency"}
-            description={analysis?.revenueMomentum.description ?? ""}
-            change={calculateChange(
-              analysis?.revenueMomentum.currentValue ?? 0,
-              analysis?.revenueMomentum.previousValue ?? 0,
-            )}
-            icon={<TrendingUp />}
-            progress={80}
-            progressLabel={`${analysis?.revenueMomentum.progress}% of $100k monthly goal`}
-          />
+          <>
+            <AnalysisCard
+              title={analysis.revenueMomentum.title}
+              value={analysis.revenueMomentum.currentValue}
+              unit={"currency"}
+              description={analysis.revenueMomentum.description}
+              change={calculateChange(
+                analysis.revenueMomentum.currentValue,
+                analysis.revenueMomentum.previousValue,
+              )}
+              icon={<TrendingUp />}
+              progress={analysis.revenueMomentum.progress}
+              progressLabel={`${analysis.revenueMomentum.progress}% of $100k monthly goal`}
+            />
+
+            <AnalysisCard
+              title={analysis.conversionRate.title}
+              value={analysis.conversionRate.currentValue}
+              unit={"percentage"}
+              description={analysis.conversionRate.description}
+              change={calculateChange(
+                analysis.conversionRate.currentValue,
+                analysis.conversionRate.previousValue,
+              )}
+              icon={<Target />}
+              progress={analysis.conversionRate.progress}
+              progressLabel={`Above the ${analysis.conversionRate.progress} category benchmark`}
+            />
+
+            <AnalysisCard
+              title={analysis.topChannel.title}
+              value={analysis.topChannel.currentValue}
+              unit={"sales"}
+              description={analysis.topChannel.description}
+              change={calculateChange(
+                analysis.topChannel.currentValue,
+                analysis.topChannel.previousValue,
+              )}
+              icon={<Rss />}
+              progress={analysis.topChannel.progress}
+              progressLabel={`${analysis.topChannel.progress}% of total sales volume`}
+            />
+
+            <AnalysisCard
+              title={analysis.inventoryRisk.title}
+              value={analysis.inventoryRisk.currentValue}
+              unit={"sku"}
+              description={analysis.inventoryRisk.description}
+              change={calculateChange(
+                analysis.inventoryRisk.currentValue,
+                analysis.inventoryRisk.previousValue,
+              )}
+              icon={<AlertTriangle />}
+              progress={analysis.inventoryRisk.progress}
+              progressLabel={`${analysis.inventoryRisk.progress}% of catalog needs restock`}
+            />
+          </>
         )}
       </div>
     </>
