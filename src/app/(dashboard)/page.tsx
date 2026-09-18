@@ -1,5 +1,4 @@
 // Fetch stats, Calculate change, Pass data to components
-
 "use client";
 
 import { useQuery } from "@tanstack/react-query";
