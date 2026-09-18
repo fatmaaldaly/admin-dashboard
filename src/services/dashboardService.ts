@@ -1,6 +1,6 @@
 // API communication
 
-import type { AnalysisResponse, StatsData } from "@/types/dashboard";
+import type { AnalysisResponse, StatsResponse } from "@/types/dashboard";
 import axios from "axios";
 
 export async function getStats() {
