@@ -2,19 +2,20 @@
 
 "use client";
 
-import StatCard from "@/components/dashboard/StatCard";
 import { useQuery } from "@tanstack/react-query";
-import { getStats } from "@/services/dashboardService";
-import StatCardSkeleton from "@/components/dashboard/StatCardSkeleton";
+import { getAnalysis } from "@/services/dashboardService";
+import AnalysisCard from "@/components/dashboard/AnalysisCard";
+import { TrendingUp, Target, Rss, AlertTriangle } from "lucide-react";
+import AnalysisCardSkeleton from "@/components/dashboard/AnalysisCardSkeleton";
 
 export default function Home() {
   const {
-    data: stats,
-    isLoading,
-    isError,
+    data: analysis,
+    isLoading: isAnalysisLoading,
+    isError: isAnalysisError,
   } = useQuery({
-    queryKey: ["stats"],
-    queryFn: getStats,
+    queryKey: ["analysis"],
+    queryFn: getAnalysis,
   });
 
   const calculateChange = (currentValue: number, previousValue: number) => {
@@ -25,61 +26,77 @@ export default function Home() {
   };
 
   return (
-    <div className="p-10">
-      <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4">
-        {isLoading ? (
+    <>
+      <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4 px-10">
+        {isAnalysisLoading ? (
           <>
-            <StatCardSkeleton />
-            <StatCardSkeleton />
-            <StatCardSkeleton />
-            <StatCardSkeleton />
+            <AnalysisCardSkeleton />
+            <AnalysisCardSkeleton />
+            <AnalysisCardSkeleton />
+            <AnalysisCardSkeleton />
           </>
-        ) : isError || !stats ? (
+        ) : isAnalysisError || !analysis ? (
           <div>Failed to load statistics cards.</div>
         ) : (
           <>
-            <StatCard
-              title={stats.totalRevenue.title}
-              value={stats.totalRevenue.currentValue}
+            <AnalysisCard
+              title={analysis.revenueMomentum.title}
+              value={analysis.revenueMomentum.currentValue}
+              unit={"currency"}
+              description={analysis.revenueMomentum.description}
               change={calculateChange(
-                stats.totalRevenue.currentValue,
-                stats.totalRevenue.previousValue,
+                analysis.revenueMomentum.currentValue,
+                analysis.revenueMomentum.previousValue,
               )}
-              format={stats.totalRevenue.format}
+              icon={<TrendingUp />}
+              progress={analysis.revenueMomentum.progress}
+              progressLabel={`${analysis.revenueMomentum.progress}% of $100k monthly goal`}
             />
 
-            <StatCard
-              title={stats.orders.title}
-              value={stats.orders.currentValue}
+            <AnalysisCard
+              title={analysis.conversionRate.title}
+              value={analysis.conversionRate.currentValue}
+              unit={"percentage"}
+              description={analysis.conversionRate.description}
               change={calculateChange(
-                stats.orders.currentValue,
-                stats.orders.previousValue,
+                analysis.conversionRate.currentValue,
+                analysis.conversionRate.previousValue,
               )}
-              format={stats.orders.format}
+              icon={<Target />}
+              progress={analysis.conversionRate.progress}
+              progressLabel={`Above the ${analysis.conversionRate.progress} category benchmark`}
             />
 
-            <StatCard
-              title={stats.newCustomers.title}
-              value={stats.newCustomers.currentValue}
+            <AnalysisCard
+              title={analysis.topChannel.title}
+              value={analysis.topChannel.currentValue}
+              unit={"sales"}
+              description={analysis.topChannel.description}
               change={calculateChange(
-                stats.newCustomers.currentValue,
-                stats.newCustomers.previousValue,
+                analysis.topChannel.currentValue,
+                analysis.topChannel.previousValue,
               )}
-              format={stats.newCustomers.format}
+              icon={<Rss />}
+              progress={analysis.topChannel.progress}
+              progressLabel={`${analysis.topChannel.progress}% of total sales volume`}
             />
 
-            <StatCard
-              title={stats.avgOrderValue.title}
-              value={stats.avgOrderValue.currentValue}
+            <AnalysisCard
+              title={analysis.inventoryRisk.title}
+              value={analysis.inventoryRisk.currentValue}
+              unit={"sku"}
+              description={analysis.inventoryRisk.description}
               change={calculateChange(
-                stats.avgOrderValue.currentValue,
-                stats.avgOrderValue.previousValue,
+                analysis.inventoryRisk.currentValue,
+                analysis.inventoryRisk.previousValue,
               )}
-              format={stats.avgOrderValue.format}
+              icon={<AlertTriangle />}
+              progress={analysis.inventoryRisk.progress}
+              progressLabel={`${analysis.inventoryRisk.progress}% of catalog needs restock`}
             />
           </>
         )}
       </div>
-    </div>
+    </>
   );
 }

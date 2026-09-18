@@ -12,3 +12,18 @@ export interface StatsResponse {
   newCustomers: StatCard;
   avgOrderValue: StatCard;
 }
+
+export interface AnalysisData {
+  title: string;
+  currentValue: number;
+  previousValue: number;  
+  description: string;
+  progress: number;
+}
+
+export interface AnalysisResponse{
+  revenueMomentum: AnalysisData;
+  conversionRate: AnalysisData;
+  topChannel: AnalysisData;
+  inventoryRisk: AnalysisData;
+}
