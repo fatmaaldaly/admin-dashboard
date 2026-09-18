@@ -1,8 +1,16 @@
-export interface StatsData {
+interface StatCard {
+  id: number;
   title: string;
+  format: "currency" | "number";
   currentValue: number;
   previousValue: number;
-  format: "currency" | "number";
+}
+
+export interface StatsResponse {
+  totalRevenue: StatCard;
+  orders: StatCard;
+  newCustomers: StatCard;
+  avgOrderValue: StatCard;
 }
 
 export interface AnalysisData {
