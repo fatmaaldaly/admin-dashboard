@@ -36,7 +36,7 @@ export default function SalesByChannel({
               tick={{ fontSize: 14 }}
             />
             <YAxis
-              width={35}
+              width={40}
               axisLine={false}
               tickLine={false}
               tick={{ fontSize: 14 }}
