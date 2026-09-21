@@ -1,10 +1,10 @@
-// Fetch stats, Calculate change, Pass data to components
 "use client";
 
 import { useQuery } from "@tanstack/react-query";
 import {
   getAnalysis,
   getRevenueOverview,
+  getSalesByChannel,
   getStats,
 } from "@/services/dashboardService";
 import AnalysisCard from "@/components/dashboard/AnalysisCard";
@@ -15,6 +15,8 @@ import StatCardSkeleton from "@/components/dashboard/StatCardSkeleton";
 import { calculateChange } from "@/utils/calculateChange";
 import RevenueOverview from "@/components/dashboard/RevenueOverview";
 import RevenueOverviewSkeleton from "@/components/dashboard/RevenueOverviewSkeleton";
+import SalesByChannel from "@/components/dashboard/SalesByChannel";
+import SalesByChannelSkeleton from "@/components/dashboard/SalesByChannelSkeleton";
 
 export default function Home() {
   const {
@@ -42,6 +44,15 @@ export default function Home() {
   } = useQuery({
     queryKey: ["revenue"],
     queryFn: getRevenueOverview,
+  });
+
+  const {
+    data: sales,
+    isLoading: isSalesLoading,
+    isError: isSalesError,
+  } = useQuery({
+    queryKey: ["sales"],
+    queryFn: getSalesByChannel,
   });
 
   return (
@@ -172,20 +183,34 @@ export default function Home() {
         )}
       </div>
 
-      <div className="mt-6">
-        {isRevenueLoading ? (
-          <RevenueOverviewSkeleton />
-        ) : isRevenueError || !revenue ? (
-          <div>Failed to load revenue overview.</div>
-        ) : (
-          <>
+      <div className="mt-6 grid grid-cols-1 gap-4 lg:grid-cols-3">
+        <div className="lg:col-span-2">
+          {isRevenueLoading ? (
+            <RevenueOverviewSkeleton />
+          ) : isRevenueError || !revenue ? (
+            <div>Failed to load revenue overview.</div>
+          ) : (
             <RevenueOverview
               title={revenue.title}
               subTitle="Monthly revenue and profit, last 9 months"
               data={revenue.data}
             />
-          </>
-        )}
+          )}
+        </div>
+
+        <div className="lg:col-span-1">
+          {isSalesLoading ? (
+            <SalesByChannelSkeleton />
+          ) : isSalesError || !sales ? (
+            <div>Failed to load sales by channel.</div>
+          ) : (
+            <SalesByChannel
+              title={sales.title}
+              subTitle="Orders per acquisition source"
+              data={sales.data}
+            />
+          )}
+        </div>
       </div>
     </div>
   );
