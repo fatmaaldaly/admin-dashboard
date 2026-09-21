@@ -36,13 +36,13 @@ export default function SalesByChannel({
               tick={{ fontSize: 14 }}
             />
             <YAxis
-              width={35}
+              width={40}
               axisLine={false}
               tickLine={false}
               tick={{ fontSize: 14 }}
             />
             <Tooltip formatter={(value) => Number(value).toLocaleString()} />
-            <Bar dataKey="sales" fill="#2563eb" radius={[6, 6, 0, 0]} />{" "}
+            <Bar dataKey="sales" fill="#2563eb" radius={[6, 6, 0, 0]} />
           </BarChart>
         </ResponsiveContainer>
       </div>
