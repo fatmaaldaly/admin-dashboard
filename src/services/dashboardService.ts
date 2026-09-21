@@ -1,6 +1,10 @@
 // API communication
 
-import type { AnalysisResponse, StatsResponse } from "@/types/dashboard";
+import type {
+  AnalysisResponse,
+  RevenueOverviewResponse,
+  StatsResponse,
+} from "@/types/dashboard";
 import axios from "axios";
 
 export async function getStats() {
@@ -13,6 +17,13 @@ export async function getStats() {
 export async function getAnalysis() {
   const res = await axios.get<AnalysisResponse>(
     "https://mocki.io/v1/695d9a5a-415f-4b0d-a8b3-0da38b86f29a",
+  );
+  return res.data;
+}
+
+export async function getRevenueOverview() {
+  const res = await axios.get<RevenueOverviewResponse>(
+    "https://dummyjson.com/c/892e-8430-4a24-bd12",
   );
   return res.data;
 }

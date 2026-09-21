@@ -27,3 +27,15 @@ export interface AnalysisResponse{
   topChannel: AnalysisData;
   inventoryRisk: AnalysisData;
 }
+
+
+export interface RevenueData {
+  month: string;
+  revenue: number;
+  profit: number;
+}
+
+export interface RevenueOverviewResponse {
+  title: string;
+  data: RevenueData[];
+}

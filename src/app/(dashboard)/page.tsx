@@ -2,13 +2,19 @@
 "use client";
 
 import { useQuery } from "@tanstack/react-query";
-import { getAnalysis, getStats } from "@/services/dashboardService";
+import {
+  getAnalysis,
+  getRevenueOverview,
+  getStats,
+} from "@/services/dashboardService";
 import AnalysisCard from "@/components/dashboard/AnalysisCard";
 import { TrendingUp, Target, Rss, AlertTriangle } from "lucide-react";
 import AnalysisCardSkeleton from "@/components/dashboard/AnalysisCardSkeleton";
 import StatCard from "@/components/dashboard/StatCard";
 import StatCardSkeleton from "@/components/dashboard/StatCardSkeleton";
 import { calculateChange } from "@/utils/calculateChange";
+import RevenueOverview from "@/components/dashboard/RevenueOverview";
+import RevenueOverviewSkeleton from "@/components/dashboard/RevenueOverviewSkeleton";
 
 export default function Home() {
   const {
@@ -27,6 +33,15 @@ export default function Home() {
   } = useQuery({
     queryKey: ["analysis"],
     queryFn: getAnalysis,
+  });
+
+  const {
+    data: revenue,
+    isLoading: isRevenueLoading,
+    isError: isRevenueError,
+  } = useQuery({
+    queryKey: ["revenue"],
+    queryFn: getRevenueOverview,
   });
 
   return (
@@ -152,6 +167,22 @@ export default function Home() {
               icon={<AlertTriangle />}
               progress={analysis.inventoryRisk.progress}
               progressLabel={`${analysis.inventoryRisk.progress}% of catalog needs restock`}
+            />
+          </>
+        )}
+      </div>
+
+      <div className="mt-6">
+        {isRevenueLoading ? (
+          <RevenueOverviewSkeleton />
+        ) : isRevenueError || !revenue ? (
+          <div>Failed to load statistics cards.</div>
+        ) : (
+          <>
+            <RevenueOverview
+              title={revenue.title}
+              subTitle="Monthly revenue and profit, last 9 months"
+              data={revenue.data}
             />
           </>
         )}
