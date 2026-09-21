@@ -3,6 +3,7 @@
 import type {
   AnalysisResponse,
   RevenueOverviewResponse,
+  SalesByChannelResponse,
   StatsResponse,
 } from "@/types/dashboard";
 import axios from "axios";
@@ -24,6 +25,13 @@ export async function getAnalysis() {
 export async function getRevenueOverview() {
   const res = await axios.get<RevenueOverviewResponse>(
     "https://dummyjson.com/c/892e-8430-4a24-bd12",
+  );
+  return res.data;
+}
+
+export async function getSalesByChannel() {
+  const res = await axios.get<SalesByChannelResponse>(
+    "https://dummyjson.com/c/bd0d-7c6c-4d54-9544",
   );
   return res.data;
 }

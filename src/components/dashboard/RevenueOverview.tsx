@@ -22,7 +22,7 @@ export default function RevenueOverview({
   data,
 }: RevenueOverviewProps) {
   return (
-    <div className="bg-white border border-gray-300 rounded-2xl p-6 shadow-sm">
+    <div className="bg-white border border-gray-300 rounded-2xl p-4 shadow-sm">
       <h2 className="font-semibold">{title}</h2>
       <span className="text-sm text-gray-500">{subTitle}</span>
       <div className="mt-4 h-80">

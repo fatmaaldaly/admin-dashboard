@@ -39,3 +39,13 @@ export interface RevenueOverviewResponse {
   title: string;
   data: RevenueData[];
 }
+
+export interface SalesData {
+  channel: string;
+  sales: number;
+}
+
+export interface SalesByChannelResponse {
+  title: string;
+  data: SalesData[];
+}
