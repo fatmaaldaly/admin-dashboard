@@ -1,4 +1,5 @@
 import ChangeBadge from "./ChangeBadge";
+import ProgressBar from "./ProgressBar";
 
 interface AnalysisCardProps {
   title: string;
@@ -30,11 +31,15 @@ export default function AnalysisCard({
           ? `${value.toLocaleString()} sales`
           : `${value} SKUs`;
 
+  const isPositive = change >= 0;
+
   return (
     <div className="flex flex-col bg-white border border-gray-300 rounded-2xl p-6 shadow-sm gap-2">
       {/* first row: icon + change */}
       <div className="flex items-center justify-between">
-        <div className="w-10 h-10 flex items-center justify-center rounded-2xl bg-green-100">
+        <div
+          className={`w-10 h-10 flex items-center justify-center rounded-2xl ${isPositive ? "bg-green-100 text-green-600" : "bg-purple-100 text-purple-600"}`}
+        >
           {icon}
         </div>
         <ChangeBadge change={change} />
@@ -44,17 +49,11 @@ export default function AnalysisCard({
       <p className="text-3xl font-bold">{formattedValue}</p>
       <p className="text-sm text-gray-500">{description}</p>
 
-      <div className="mt-3">
-        <div className="h-2 w-full rounded-full bg-gray-200">
-          <div
-            className="h-full rounded-full bg-green-600"
-            style={{ width: `${progress}%` }}
-          />
-        </div>
-        <div className="mt-2 flex justify-between text-xs text-gray-500">
-          <span>{progressLabel}</span>
-        </div>
-      </div>
+      <ProgressBar
+        progress={progress}
+        change={change}
+        progressLabel={progressLabel}
+      />
     </div>
   );
 }
