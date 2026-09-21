@@ -1,6 +1,7 @@
 import ChangeBadge from "./ChangeBadge";
 import ProgressBar from "./ProgressBar";
 
+
 interface AnalysisCardProps {
   title: string;
   value: number;
