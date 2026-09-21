@@ -110,7 +110,7 @@ export default function Home() {
             <AnalysisCardSkeleton />
           </>
         ) : isAnalysisError || !analysis ? (
-          <div>Failed to load statistics cards.</div>
+          <div>Failed to load analysis cards.</div>
         ) : (
           <>
             <AnalysisCard
@@ -176,7 +176,7 @@ export default function Home() {
         {isRevenueLoading ? (
           <RevenueOverviewSkeleton />
         ) : isRevenueError || !revenue ? (
-          <div>Failed to load statistics cards.</div>
+          <div>Failed to load revenue overview.</div>
         ) : (
           <>
             <RevenueOverview
