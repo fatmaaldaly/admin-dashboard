@@ -7,6 +7,7 @@ import {
   getRevenueOverview,
   getSalesByChannel,
   getStats,
+  getTopProducts,
 } from "@/services/dashboardService";
 import AnalysisCard from "@/components/dashboard/AnalysisCard";
 import { TrendingUp, Target, Rss, AlertTriangle } from "lucide-react";
@@ -20,6 +21,8 @@ import SalesByChannel from "@/components/dashboard/SalesByChannel";
 import SalesByChannelSkeleton from "@/components/dashboard/SalesByChannelSkeleton";
 import RecentOrders from "@/components/dashboard/RecentOrders";
 import RecentOrdersSkeleton from "@/components/dashboard/RecentOrdersSkeleton";
+import TopProducts from "@/components/dashboard/TopProducts";
+import TopProductsSkeleton from "@/components/dashboard/TopProductsSkeleton";
 
 export default function Home() {
   const {
@@ -65,6 +68,15 @@ export default function Home() {
   } = useQuery({
     queryKey: ["orders"],
     queryFn: getRecentOrders,
+  });
+
+  const {
+    data: products,
+    isLoading: isProductsLoading,
+    isError: isProductsError,
+  } = useQuery({
+    queryKey: ["products"],
+    queryFn: getTopProducts,
   });
 
   return (
@@ -236,7 +248,15 @@ export default function Home() {
           )}
         </div>
 
-        <div className="lg:col-span-1"></div>
+        <div className="lg:col-span-1">
+          {isProductsLoading ? (
+            <TopProductsSkeleton />
+          ) : isProductsError || !products ? (
+            <div>Failed to load top products.</div>
+          ) : (
+            <TopProducts title={products.title} data={products.data} />
+          )}
+        </div>
       </div>
     </div>
   );
