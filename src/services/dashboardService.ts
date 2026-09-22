@@ -2,6 +2,7 @@
 
 import type {
   AnalysisResponse,
+  OrdersResponse,
   RevenueOverviewResponse,
   SalesByChannelResponse,
   StatsResponse,
@@ -32,6 +33,13 @@ export async function getRevenueOverview() {
 export async function getSalesByChannel() {
   const res = await axios.get<SalesByChannelResponse>(
     "https://dummyjson.com/c/bd0d-7c6c-4d54-9544",
+  );
+  return res.data;
+}
+
+export async function getRecentOrders() {
+  const res = await axios.get<OrdersResponse>(
+    "https://dummyjson.com/c/64e0-41e8-46a3-a295",
   );
   return res.data;
 }
