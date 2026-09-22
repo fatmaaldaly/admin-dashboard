@@ -49,3 +49,20 @@ export interface SalesByChannelResponse {
   title: string;
   data: SalesData[];
 }
+
+
+export interface OrdersData {
+  id: string;
+  customer: {
+    name: string;
+    email: string;
+  };
+  product: string;
+  status: string;
+  amount: number;
+}
+
+export interface OrdersResponse {
+  title: string;
+  data: OrdersData[];
+}

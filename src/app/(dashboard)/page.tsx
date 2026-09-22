@@ -3,6 +3,7 @@
 import { useQuery } from "@tanstack/react-query";
 import {
   getAnalysis,
+  getRecentOrders,
   getRevenueOverview,
   getSalesByChannel,
   getStats,
@@ -17,6 +18,8 @@ import RevenueOverview from "@/components/dashboard/RevenueOverview";
 import RevenueOverviewSkeleton from "@/components/dashboard/RevenueOverviewSkeleton";
 import SalesByChannel from "@/components/dashboard/SalesByChannel";
 import SalesByChannelSkeleton from "@/components/dashboard/SalesByChannelSkeleton";
+import RecentOrders from "@/components/dashboard/RecentOrders";
+import RecentOrdersSkeleton from "@/components/dashboard/RecentOrdersSkeleton";
 
 export default function Home() {
   const {
@@ -53,6 +56,15 @@ export default function Home() {
   } = useQuery({
     queryKey: ["sales"],
     queryFn: getSalesByChannel,
+  });
+
+  const {
+    data: orders,
+    isLoading: isOrdersLoading,
+    isError: isOrdersError,
+  } = useQuery({
+    queryKey: ["orders"],
+    queryFn: getRecentOrders,
   });
 
   return (
@@ -211,6 +223,20 @@ export default function Home() {
             />
           )}
         </div>
+      </div>
+
+      <div className="mt-6 grid grid-cols-1 gap-4 lg:grid-cols-3">
+        <div className="lg:col-span-2">
+          {isOrdersLoading ? (
+            <RecentOrdersSkeleton />
+          ) : isOrdersError || !orders ? (
+            <div>Failed to load recent orders.</div>
+          ) : (
+            <RecentOrders title={orders.title} data={orders.data} />
+          )}
+        </div>
+
+        <div className="lg:col-span-1"></div>
       </div>
     </div>
   );
