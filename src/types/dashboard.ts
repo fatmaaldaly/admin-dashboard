@@ -66,3 +66,17 @@ export interface OrdersResponse {
   title: string;
   data: OrdersData[];
 }
+
+export interface TopProduct {
+  id: number;
+  title: string;
+  category: string;
+  stock: number;
+  price: number;
+  sold: number;
+}
+
+export interface TopProductsResponse {
+  title: string;
+  data: TopProduct[];
+}
