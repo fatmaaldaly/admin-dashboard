@@ -1,18 +1,20 @@
+import { calculateChange } from "@/utils/calculateChange";
 import ChangeBadge from "./ChangeBadge";
 
 interface StatCardProps {
   title: string;
   value: number;
-  change: number;
+  previousValue: number;
   format: "currency" | "number";
 }
 
 export default function StatCard({
   title,
   value,
-  change,
+  previousValue,
   format,
 }: StatCardProps) {
+  const change = calculateChange(value, previousValue);
   const formattedValue =
     format === "currency"
       ? `$${value.toLocaleString()}`
