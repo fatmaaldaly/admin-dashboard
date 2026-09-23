@@ -1,13 +1,28 @@
 "use client";
 
 import { useQuery } from "@tanstack/react-query";
-import { getAnalysis, getStats } from "@/services/dashboardService";
-import AnalysisCard from "@/components/dashboard/AnalysisCard";
+import {
+  getAnalysis,
+  getRecentOrders,
+  getRevenueOverview,
+  getSalesByChannel,
+  getStats,
+  getTopProducts,
+} from "@/services/overviewServices";
+import AnalysisCard from "@/components/overview/AnalysisCard";
 import { TrendingUp, Target, Rss, AlertTriangle } from "lucide-react";
-import AnalysisCardSkeleton from "@/components/dashboard/AnalysisCardSkeleton";
-import StatCard from "@/components/dashboard/StatCard";
-import StatCardSkeleton from "@/components/dashboard/StatCardSkeleton";
+import AnalysisCardSkeleton from "@/components/overview/AnalysisCardSkeleton";
+import StatCard from "@/components/overview/StatCard";
+import StatCardSkeleton from "@/components/overview/StatCardSkeleton";
 import { calculateChange } from "@/utils/calculateChange";
+import RevenueOverview from "@/components/overview/RevenueOverview";
+import RevenueOverviewSkeleton from "@/components/overview/RevenueOverviewSkeleton";
+import SalesByChannel from "@/components/overview/SalesByChannel";
+import SalesByChannelSkeleton from "@/components/overview/SalesByChannelSkeleton";
+import RecentOrders from "@/components/overview/RecentOrders";
+import RecentOrdersSkeleton from "@/components/overview/RecentOrdersSkeleton";
+import TopProducts from "@/components/overview/TopProducts";
+import TopProductsSkeleton from "@/components/overview/TopProductsSkeleton";
 
 export default function Home() {
   const {
@@ -26,6 +41,42 @@ export default function Home() {
   } = useQuery({
     queryKey: ["analysis"],
     queryFn: getAnalysis,
+  });
+
+  const {
+    data: revenue,
+    isLoading: isRevenueLoading,
+    isError: isRevenueError,
+  } = useQuery({
+    queryKey: ["revenue"],
+    queryFn: getRevenueOverview,
+  });
+
+  const {
+    data: sales,
+    isLoading: isSalesLoading,
+    isError: isSalesError,
+  } = useQuery({
+    queryKey: ["sales"],
+    queryFn: getSalesByChannel,
+  });
+
+  const {
+    data: orders,
+    isLoading: isOrdersLoading,
+    isError: isOrdersError,
+  } = useQuery({
+    queryKey: ["orders"],
+    queryFn: getRecentOrders,
+  });
+
+  const {
+    data: products,
+    isLoading: isProductsLoading,
+    isError: isProductsError,
+  } = useQuery({
+    queryKey: ["products"],
+    queryFn: getTopProducts,
   });
 
   return (
@@ -94,7 +145,7 @@ export default function Home() {
             <AnalysisCardSkeleton />
           </>
         ) : isAnalysisError || !analysis ? (
-          <div>Failed to load statistics cards.</div>
+          <div>Failed to load analysis cards.</div>
         ) : (
           <>
             <AnalysisCard
@@ -142,6 +193,58 @@ export default function Home() {
             />
           </>
         )}
+      </div>
+
+      <div className="mt-6 grid grid-cols-1 gap-4 lg:grid-cols-3">
+        <div className="lg:col-span-2">
+          {isRevenueLoading ? (
+            <RevenueOverviewSkeleton />
+          ) : isRevenueError || !revenue ? (
+            <div>Failed to load revenue overview.</div>
+          ) : (
+            <RevenueOverview
+              title={revenue.title}
+              subTitle="Monthly revenue and profit, last 9 months"
+              data={revenue.data}
+            />
+          )}
+        </div>
+
+        <div className="lg:col-span-1">
+          {isSalesLoading ? (
+            <SalesByChannelSkeleton />
+          ) : isSalesError || !sales ? (
+            <div>Failed to load sales by channel.</div>
+          ) : (
+            <SalesByChannel
+              title={sales.title}
+              subTitle="Orders per acquisition source"
+              data={sales.data}
+            />
+          )}
+        </div>
+      </div>
+
+      <div className="mt-6 grid grid-cols-1 gap-4 lg:grid-cols-3">
+        <div className="lg:col-span-2">
+          {isOrdersLoading ? (
+            <RecentOrdersSkeleton />
+          ) : isOrdersError || !orders ? (
+            <div>Failed to load recent orders.</div>
+          ) : (
+            <RecentOrders title={orders.title} data={orders.data} />
+          )}
+        </div>
+
+        <div className="lg:col-span-1">
+          {isProductsLoading ? (
+            <TopProductsSkeleton />
+          ) : isProductsError || !products ? (
+            <div>Failed to load top products.</div>
+          ) : (
+            <TopProducts title={products.title} data={products.data} />
+          )}
+        </div>
       </div>
     </div>
   );

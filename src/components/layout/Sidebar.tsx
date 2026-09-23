@@ -1,64 +1,14 @@
 "use client";
 
-import Link from "next/link";
 import { FiShoppingBag } from "react-icons/fi";
-import {
-  LayoutDashboard,
-  ShoppingBag,
-  Package,
-  Users,
-  BarChart3,
-  Settings,
-  LifeBuoy,
-} from "lucide-react";
 import { usePathname } from "next/navigation";
 import NavItem from "./NavItem";
-
-const menuItems = [
-  {
-    name: "Overview",
-    href: "/",
-    icon: <LayoutDashboard size={20} />,
-  },
-  {
-    name: "Orders",
-    href: "/orders",
-    icon: <ShoppingBag size={20} />,
-  },
-  {
-    name: "Products",
-    href: "/products",
-    icon: <Package size={20} />,
-  },
-  {
-    name: "Customers",
-    href: "/customers",
-    icon: <Users size={20} />,
-  },
-  {
-    name: "Analytics",
-    href: "/analytics",
-    icon: <BarChart3 size={20} />,
-  },
-];
-
-const generalItems = [
-  {
-    name: "Settings",
-    href: "/dashboard/settings",
-    icon: <Settings />,
-  },
-  {
-    name: "Support",
-    href: "/dashboard/support",
-    icon: <LifeBuoy />,
-  },
-];
+import { menuItems, generalItems } from "@/data/navigation";
 
 export default function Sidebar() {
   const pathname = usePathname();
   return (
-    <div className="hidden h-screen w-65 shrink-0 flex-col border-r border-gray-300 bg-indigo-950 px-6 py-4 md:flex">
+    <div className="hidden min-h-screen w-65 shrink-0 flex-col border-r border-gray-300 bg-indigo-950 px-6 py-4 md:flex">
       <header>
         <div className="flex items-center gap-3">
           <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-blue-600">
@@ -78,7 +28,7 @@ export default function Sidebar() {
           <div className="flex flex-col gap-1">
             {menuItems.map((item) => (
               <NavItem
-                key={item.name}
+                key={item.href}
                 name={item.name}
                 href={item.href}
                 icon={item.icon}
@@ -93,7 +43,7 @@ export default function Sidebar() {
           <div className="flex flex-col gap-1">
             {generalItems.map((item) => (
               <NavItem
-                key={item.name}
+                key={item.href}
                 name={item.name}
                 href={item.href}
                 icon={item.icon}
