@@ -1,4 +1,3 @@
-// Fetch stats, Calculate change, Pass data to components
 "use client";
 
 import { useQuery } from "@tanstack/react-query";
@@ -101,12 +100,9 @@ export default function Home() {
             <AnalysisCard
               title={analysis.revenueMomentum.title}
               value={analysis.revenueMomentum.currentValue}
+              previousValue={analysis.revenueMomentum.previousValue}
               unit={"currency"}
               description={analysis.revenueMomentum.description}
-              change={calculateChange(
-                analysis.revenueMomentum.currentValue,
-                analysis.revenueMomentum.previousValue,
-              )}
               icon={<TrendingUp />}
               progress={analysis.revenueMomentum.progress}
               progressLabel={`${analysis.revenueMomentum.progress}% of $100k monthly goal`}
@@ -115,12 +111,9 @@ export default function Home() {
             <AnalysisCard
               title={analysis.conversionRate.title}
               value={analysis.conversionRate.currentValue}
+              previousValue={analysis.conversionRate.previousValue}
               unit={"percentage"}
               description={analysis.conversionRate.description}
-              change={calculateChange(
-                analysis.conversionRate.currentValue,
-                analysis.conversionRate.previousValue,
-              )}
               icon={<Target />}
               progress={analysis.conversionRate.progress}
               progressLabel={`Above the ${analysis.conversionRate.progress} category benchmark`}
@@ -129,12 +122,9 @@ export default function Home() {
             <AnalysisCard
               title={analysis.topChannel.title}
               value={analysis.topChannel.currentValue}
+              previousValue={analysis.topChannel.previousValue}
               unit={"sales"}
               description={analysis.topChannel.description}
-              change={calculateChange(
-                analysis.topChannel.currentValue,
-                analysis.topChannel.previousValue,
-              )}
               icon={<Rss />}
               progress={analysis.topChannel.progress}
               progressLabel={`${analysis.topChannel.progress}% of total sales volume`}
@@ -143,12 +133,9 @@ export default function Home() {
             <AnalysisCard
               title={analysis.inventoryRisk.title}
               value={analysis.inventoryRisk.currentValue}
+              previousValue={analysis.inventoryRisk.previousValue}
               unit={"sku"}
               description={analysis.inventoryRisk.description}
-              change={calculateChange(
-                analysis.inventoryRisk.currentValue,
-                analysis.inventoryRisk.previousValue,
-              )}
               icon={<AlertTriangle />}
               progress={analysis.inventoryRisk.progress}
               progressLabel={`${analysis.inventoryRisk.progress}% of catalog needs restock`}
