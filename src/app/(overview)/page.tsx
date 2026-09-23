@@ -14,7 +14,6 @@ import { TrendingUp, Target, Rss, AlertTriangle } from "lucide-react";
 import AnalysisCardSkeleton from "@/components/overview/AnalysisCardSkeleton";
 import StatCard from "@/components/overview/StatCard";
 import StatCardSkeleton from "@/components/overview/StatCardSkeleton";
-import { calculateChange } from "@/utils/calculateChange";
 import RevenueOverview from "@/components/overview/RevenueOverview";
 import RevenueOverviewSkeleton from "@/components/overview/RevenueOverviewSkeleton";
 import SalesByChannel from "@/components/overview/SalesByChannel";
