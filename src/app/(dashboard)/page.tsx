@@ -1,3 +1,4 @@
+// Fetch stats, Calculate change, Pass data to components
 "use client";
 
 import StatCard from "@/components/dashboard/StatCard";
@@ -14,6 +15,13 @@ export default function Home() {
     queryKey: ["stats"],
     queryFn: getStats,
   });
+
+  const calculateChange = (currentValue: number, previousValue: number) => {
+    if (previousValue === 0) {
+      return 0;
+    }
+    return ((currentValue - previousValue) / previousValue) * 100;
+  };
 
   return (
     <div className="p-10">
@@ -32,28 +40,40 @@ export default function Home() {
             <StatCard
               title={stats.totalRevenue.title}
               value={stats.totalRevenue.currentValue}
-              previousValue={stats.totalRevenue.previousValue}
+              change={calculateChange(
+                stats.totalRevenue.currentValue,
+                stats.totalRevenue.previousValue,
+              )}
               format={stats.totalRevenue.format}
             />
 
             <StatCard
               title={stats.orders.title}
               value={stats.orders.currentValue}
-              previousValue={stats.orders.previousValue}
+              change={calculateChange(
+                stats.orders.currentValue,
+                stats.orders.previousValue,
+              )}
               format={stats.orders.format}
             />
 
             <StatCard
               title={stats.newCustomers.title}
               value={stats.newCustomers.currentValue}
-              previousValue={stats.newCustomers.previousValue}
+              change={calculateChange(
+                stats.newCustomers.currentValue,
+                stats.newCustomers.previousValue,
+              )}
               format={stats.newCustomers.format}
             />
 
             <StatCard
               title={stats.avgOrderValue.title}
               value={stats.avgOrderValue.currentValue}
-              previousValue={stats.avgOrderValue.previousValue}
+              change={calculateChange(
+                stats.avgOrderValue.currentValue,
+                stats.avgOrderValue.previousValue,
+              )}
               format={stats.avgOrderValue.format}
             />
           </>
