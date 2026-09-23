@@ -1,13 +1,13 @@
+import { calculateChange } from "@/utils/calculateChange";
 import ChangeBadge from "./ChangeBadge";
 import ProgressBar from "./ProgressBar";
-
 
 interface AnalysisCardProps {
   title: string;
   value: number;
+  previousValue: number;
   unit: "currency" | "percentage" | "sales" | "sku";
   description: string;
-  change: number;
   icon: React.ReactNode;
   progress: number;
   progressLabel: string;
@@ -16,13 +16,14 @@ interface AnalysisCardProps {
 export default function AnalysisCard({
   title,
   value,
+  previousValue,
   unit,
   description,
-  change,
   icon,
   progress,
   progressLabel,
 }: AnalysisCardProps) {
+  const change = calculateChange(value, previousValue);
   const formattedValue =
     unit === "currency"
       ? `$${value.toLocaleString()}`
