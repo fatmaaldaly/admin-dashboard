@@ -1,4 +1,4 @@
-import { RevenueData } from "@/types/dashboard";
+import { RevenueData } from "@/types/overview";
 import {
   CartesianGrid,
   Legend,

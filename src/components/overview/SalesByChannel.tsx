@@ -1,4 +1,4 @@
-import { SalesData } from "@/types/dashboard";
+import { SalesData } from "@/types/overview";
 import {
   Bar,
   BarChart,

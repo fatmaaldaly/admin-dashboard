@@ -1,4 +1,4 @@
-import { TopProduct } from "@/types/dashboard";
+import { TopProduct } from "@/types/overview";
 
 interface TopProductsProps {
   title: string;

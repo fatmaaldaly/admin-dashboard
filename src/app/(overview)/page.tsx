@@ -8,21 +8,21 @@ import {
   getSalesByChannel,
   getStats,
   getTopProducts,
-} from "@/services/dashboardService";
-import AnalysisCard from "@/components/dashboard/AnalysisCard";
+} from "@/services/overviewServices";
+import AnalysisCard from "@/components/overview/AnalysisCard";
 import { TrendingUp, Target, Rss, AlertTriangle } from "lucide-react";
-import AnalysisCardSkeleton from "@/components/dashboard/AnalysisCardSkeleton";
-import StatCard from "@/components/dashboard/StatCard";
-import StatCardSkeleton from "@/components/dashboard/StatCardSkeleton";
+import AnalysisCardSkeleton from "@/components/overview/AnalysisCardSkeleton";
+import StatCard from "@/components/overview/StatCard";
+import StatCardSkeleton from "@/components/overview/StatCardSkeleton";
 import { calculateChange } from "@/utils/calculateChange";
-import RevenueOverview from "@/components/dashboard/RevenueOverview";
-import RevenueOverviewSkeleton from "@/components/dashboard/RevenueOverviewSkeleton";
-import SalesByChannel from "@/components/dashboard/SalesByChannel";
-import SalesByChannelSkeleton from "@/components/dashboard/SalesByChannelSkeleton";
-import RecentOrders from "@/components/dashboard/RecentOrders";
-import RecentOrdersSkeleton from "@/components/dashboard/RecentOrdersSkeleton";
-import TopProducts from "@/components/dashboard/TopProducts";
-import TopProductsSkeleton from "@/components/dashboard/TopProductsSkeleton";
+import RevenueOverview from "@/components/overview/RevenueOverview";
+import RevenueOverviewSkeleton from "@/components/overview/RevenueOverviewSkeleton";
+import SalesByChannel from "@/components/overview/SalesByChannel";
+import SalesByChannelSkeleton from "@/components/overview/SalesByChannelSkeleton";
+import RecentOrders from "@/components/overview/RecentOrders";
+import RecentOrdersSkeleton from "@/components/overview/RecentOrdersSkeleton";
+import TopProducts from "@/components/overview/TopProducts";
+import TopProductsSkeleton from "@/components/overview/TopProductsSkeleton";
 
 export default function Home() {
   const {

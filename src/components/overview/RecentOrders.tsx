@@ -1,4 +1,4 @@
-import { OrdersData } from "@/types/dashboard";
+import { OrdersData } from "@/types/overview";
 import InitialsBadge from "../InitialsBadge";
 import StatusBadge from "./StatusBadge";
 

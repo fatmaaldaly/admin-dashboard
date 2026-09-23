@@ -7,7 +7,7 @@ import type {
   SalesByChannelResponse,
   StatsResponse,
   TopProductsResponse,
-} from "@/types/dashboard";
+} from "@/types/overview";
 import axios from "axios";
 
 export async function getStats() {
