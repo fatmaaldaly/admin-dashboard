@@ -6,7 +6,7 @@
 
 import OrdersTable from "@/components/orders/OrdersTable";
 import OrdersTableSkeleton from "@/components/orders/OrdersTableSkeleton";
-import { getOrders } from "@/services/overviewServices";
+import { getOrders } from "@/services/dashboardServices";
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 

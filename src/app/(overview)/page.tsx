@@ -8,7 +8,7 @@ import {
   getSalesByChannel,
   getStats,
   getTopProducts,
-} from "@/services/overviewServices";
+} from "@/services/dashboardServices";
 import AnalysisCard from "@/components/overview/AnalysisCard";
 import { TrendingUp, Target, Rss, AlertTriangle } from "lucide-react";
 import AnalysisCardSkeleton from "@/components/overview/AnalysisCardSkeleton";
