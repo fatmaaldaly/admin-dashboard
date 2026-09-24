@@ -51,3 +51,11 @@ export async function getTopProducts() {
   );
   return res.data;
 }
+
+
+export async function getOrders() {
+  const res = await axios.get<OrdersResponse>(
+    "https://dummyjson.com/c/131e-1db1-4c6e-a575",
+  );
+  return res.data;
+}
