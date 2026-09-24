@@ -1,12 +1,24 @@
+// displays the current orders
+// passes pagination information to Pagination
+
 import { OrdersData } from "@/types/overview";
 import InitialsBadge from "../InitialsBadge";
 import StatusBadge from "../overview/StatusBadge";
+import Pagination from "../Pagination";
 
-interface RecentOrdersProps {
+interface OrdersTableProps {
   data: OrdersData[];
+  currentPage: number;
+  totalPages: number;
+  onPageChange: (page: number) => void;
 }
 
-export default function OrdersTable({ data }: RecentOrdersProps) {
+export default function OrdersTable({
+  data,
+  currentPage,
+  totalPages,
+  onPageChange,
+}: OrdersTableProps) {
   return (
     <div className="bg-white border border-gray-300 rounded-2xl p-4 shadow-sm">
       <div className="mt-4 overflow-x-auto p-2">
@@ -54,6 +66,11 @@ export default function OrdersTable({ data }: RecentOrdersProps) {
             ))}
           </tbody>
         </table>
+        <Pagination
+          currentPage={currentPage}
+          totalPages={totalPages}
+          onPageChange={onPageChange}
+        />
       </div>
     </div>
   );
