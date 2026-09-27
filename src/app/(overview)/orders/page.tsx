@@ -8,13 +8,16 @@ import OrdersTable from "@/components/orders/OrdersTable";
 import OrdersTableSkeleton from "@/components/orders/OrdersTableSkeleton";
 import { getOrders } from "@/services/dashboardServices";
 import { useQuery } from "@tanstack/react-query";
-import { useState } from "react";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
-const ordersPerPage = 5;
+const ORDERS_PER_PAGE = 5;
 
 export default function OrdersPage() {
-  const [currentPage, setCurrentPage] = useState(1);
-  const [statusFilter, setStatusFilter] = useState("all");
+  const searchParams = useSearchParams();
+  const searchQuery = searchParams.get("q") ?? "";
+  const router = useRouter();
+  const pathname = usePathname();
+  const statusFilter = searchParams.get("status") ?? "all";
 
   const {
     data: orders,
@@ -25,21 +28,45 @@ export default function OrdersPage() {
     queryFn: getOrders,
   });
 
-  const filteredOrders =
-    statusFilter === "all"
-      ? (orders?.data ?? [])
-      : (orders?.data.filter((order) => order.status === statusFilter) ?? []);
+  const filteredOrders = (orders?.data ?? []).filter((order) => {
+    const matchesStatus =
+      statusFilter === "all" || order.status === statusFilter;
 
-  const totalPages = Math.ceil(filteredOrders.length / ordersPerPage);
-  const startIndex = (currentPage - 1) * ordersPerPage;
+    const matchesSearch =
+      order.customer.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      order.customer.email.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      order.product.toLowerCase().includes(searchQuery.toLowerCase());
+
+    return matchesStatus && matchesSearch;
+  });
+
+  const currentPage = Number(searchParams.get("page")) || 1;
+  const totalPages = Math.ceil(filteredOrders.length / ORDERS_PER_PAGE);
+  const startIndex = (currentPage - 1) * ORDERS_PER_PAGE;
   const currentOrders = filteredOrders.slice(
     startIndex,
-    startIndex + ordersPerPage,
+    startIndex + ORDERS_PER_PAGE,
   );
 
   const handleStatusChange = (status: string) => {
-    setStatusFilter(status);
-    setCurrentPage(1);
+    const params = new URLSearchParams(searchParams.toString());
+    if (status === "all") {
+      params.delete("status");
+    } else {
+      params.set("status", status);
+    }
+    params.delete("page");
+    router.replace(`${pathname}?${params.toString()}`);
+  };
+
+  const handlePageChange = (page: number) => {
+    const params = new URLSearchParams(searchParams.toString());
+    if (page === 1) {
+      params.delete("page");
+    } else {
+      params.set("page", String(page));
+    }
+    router.replace(`${pathname}?${params.toString()}`);
   };
 
   return (
@@ -65,10 +92,10 @@ export default function OrdersPage() {
         <div>Failed to load orders table.</div>
       ) : (
         <OrdersTable
-          data={currentOrders ?? []}
+          data={currentOrders}
           currentPage={currentPage}
           totalPages={totalPages}
-          onPageChange={setCurrentPage}
+          onPageChange={handlePageChange}
         />
       )}
     </div>
