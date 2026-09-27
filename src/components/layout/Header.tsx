@@ -5,6 +5,7 @@ import InitialsBadge from "../InitialsBadge";
 import { Menu, Search } from "lucide-react";
 import MobileSidebar from "./MobileSidebar";
 import { usePathname, useSearchParams, useRouter } from "next/navigation";
+import { pageInfo } from "@/data/navigation";
 
 export default function Header() {
   const companyName = "Acme Commerce";
@@ -24,6 +25,8 @@ export default function Header() {
     router.replace(`${pathname}?${params.toString()}`);
   };
 
+  const currentPage = pageInfo[pathname as keyof typeof pageInfo];
+
   return (
     <header className="flex h-16 items-center justify-between border-b border-gray-300 bg-white px-4 md:px-6">
       {/* left side */}
@@ -41,10 +44,8 @@ export default function Header() {
           onClose={() => setIsMenuOpen(false)}
         />
         <div className="flex flex-col">
-          <h1 className="text-lg font-semibold">Overview</h1>
-          <p className="text-xs text-gray-500">
-            Welcome back, here is what is happening today.
-          </p>
+          <h1 className="text-lg font-semibold">{currentPage?.title}</h1>
+          <p className="text-xs text-gray-500">{currentPage?.subtitle}</p>
         </div>
       </div>
 

@@ -48,3 +48,26 @@ export const generalItems = [
     icon: <LifeBuoy size={20} />,
   },
 ];
+
+export const pageInfo = {
+  "/": {
+    title: "Overview",
+    subtitle: "Welcome back, here is what is happening today",
+  },
+  "/orders": {
+    title: "Orders",
+    subtitle: "Manage and track your customer orders",
+  },
+  "/products": {
+    title: "Products",
+    subtitle: "Manage your products and inventory",
+  },
+  "/customers": {
+    title: "Customers",
+    subtitle: "View and manage your customers",
+  },
+  "/analytics": {
+    title: "Analytics",
+    subtitle: "Track your store performance",
+  },
+};
