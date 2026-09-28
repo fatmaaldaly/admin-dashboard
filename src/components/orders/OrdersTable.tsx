@@ -5,6 +5,7 @@ import { OrdersData } from "@/types/overview";
 import InitialsBadge from "../InitialsBadge";
 import StatusBadge from "../overview/StatusBadge";
 import Pagination from "../Pagination";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 interface OrdersTableProps {
   data: OrdersData[];
@@ -19,6 +20,10 @@ export default function OrdersTable({
   totalPages,
   onPageChange,
 }: OrdersTableProps) {
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+
   return (
     <div className="bg-white border border-gray-300 rounded-2xl p-4 shadow-sm">
       <div className="mt-4 overflow-x-auto p-2">
@@ -36,7 +41,8 @@ export default function OrdersTable({
             {data.map((item) => (
               <tr
                 key={item.id}
-                className="border-b border-gray-200 last:border-b-0"
+                onClick={() => router.push(`/orders/${item.id}`)}
+                className="cursor-pointer border-b border-gray-200 last:border-b-0 hover:bg-gray-50"
               >
                 <td className="py-3">
                   <div className="flex items-center gap-3">
