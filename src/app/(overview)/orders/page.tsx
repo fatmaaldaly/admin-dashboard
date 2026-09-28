@@ -5,6 +5,7 @@
 "use client";
 
 import OrdersTable from "@/components/orders/OrdersTable";
+import OrdersTableEmpty from "@/components/orders/OrdersTableEmpty";
 import OrdersTableSkeleton from "@/components/orders/OrdersTableSkeleton";
 import { getOrders } from "@/services/dashboardServices";
 import { useQuery } from "@tanstack/react-query";
@@ -48,6 +49,13 @@ export default function OrdersPage() {
     startIndex + ORDERS_PER_PAGE,
   );
 
+  const startItem = filteredOrders.length === 0 ? 0 : startIndex + 1;
+
+  const endItem = Math.min(
+    startIndex + currentOrders.length,
+    filteredOrders.length,
+  );
+
   const handleStatusChange = (status: string) => {
     const params = new URLSearchParams(searchParams.toString());
     if (status === "all") {
@@ -71,7 +79,10 @@ export default function OrdersPage() {
 
   return (
     <div className="p-10">
-      <div className="mb-4 flex justify-end">
+      <div className="mb-4 flex justify-between">
+        <p className="text-sm">
+          {`Showing ${startItem} – ${endItem} of ${filteredOrders.length} orders`}{" "}
+        </p>
         <select
           value={statusFilter}
           onChange={(event) => handleStatusChange(event.target.value)}
@@ -90,6 +101,8 @@ export default function OrdersPage() {
         <OrdersTableSkeleton />
       ) : isOrdersError || !orders ? (
         <div>Failed to load orders table.</div>
+      ) : filteredOrders.length === 0 ? (
+        <OrdersTableEmpty />
       ) : (
         <OrdersTable
           data={currentOrders}
