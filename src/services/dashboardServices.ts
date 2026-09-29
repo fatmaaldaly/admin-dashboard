@@ -3,6 +3,7 @@
 import type {
   AnalysisResponse,
   OrdersResponse,
+  Product,
   ProductsResponse,
   RevenueOverviewResponse,
   SalesByChannelResponse,
@@ -63,6 +64,14 @@ export async function getOrders() {
 
 export async function getProducts() {
   const res = await axios.get<ProductsResponse>("https://dummyjson.com/products");
+
+  return res.data;
+}
+
+export async function getProductById(id: string) {
+  const res = await axios.get<Product>(
+    `https://dummyjson.com/products/${id}`,
+  );
 
   return res.data;
 }
