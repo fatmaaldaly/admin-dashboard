@@ -5,7 +5,7 @@ import { OrdersData } from "@/types/overview";
 import InitialsBadge from "../InitialsBadge";
 import StatusBadge from "../overview/StatusBadge";
 import Pagination from "../Pagination";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 
 interface OrdersTableProps {
   data: OrdersData[];
@@ -21,8 +21,6 @@ export default function OrdersTable({
   onPageChange,
 }: OrdersTableProps) {
   const router = useRouter();
-  const pathname = usePathname();
-  const searchParams = useSearchParams();
 
   return (
     <div className="bg-white border border-gray-300 rounded-2xl p-4 shadow-sm">

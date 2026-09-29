@@ -13,7 +13,7 @@ export default function TopProducts({ title, data }: TopProductsProps) {
       <div className="mt-4 overflow-x-auto">
         <table className="w-full">
           <tbody>
-            {data.map((item, index) => (
+            {data?.map((item, index) => (
               <tr
                 key={item.id}
                 className="border-b border-gray-100 last:border-b-0"

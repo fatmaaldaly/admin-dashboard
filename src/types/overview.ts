@@ -1,3 +1,5 @@
+// overview/home page
+
 interface StatCard {
   id: number;
   title: string;
@@ -79,4 +81,23 @@ export interface TopProduct {
 export interface TopProductsResponse {
   title: string;
   data: TopProduct[];
+}
+
+
+// products page
+
+export interface Product {
+  id: number;
+  title: string;
+  category: string;
+  price: number;
+  stock: number;
+  thumbnail: string;
+}
+
+export interface ProductsResponse {
+  products: Product[];
+  total: number;
+  skip: number;
+  limit: number;
 }
