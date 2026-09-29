@@ -1,5 +1,6 @@
 import { Product } from "@/types/overview";
 import Pagination from "../Pagination";
+import { useRouter } from "next/navigation";
 
 interface ProductsTableProps {
   data: Product[];
@@ -14,6 +15,7 @@ export default function ProductsTable({
   totalPages,
   onPageChange,
 }: ProductsTableProps) {
+  const router = useRouter();
   return (
     <div className="bg-white border border-gray-300 rounded-2xl p-4 shadow-sm">
       <div className="mt-4 overflow-x-auto p-2">
@@ -41,6 +43,7 @@ export default function ProductsTable({
               data.map((product) => (
                 <tr
                   key={product.id}
+                  onClick={() => router.push(`/products/${product.id}`)}
                   className="cursor-pointer border-b border-gray-200 last:border-b-0 hover:bg-gray-50"
                 >
                   <td className="px-4 py-4 text-sm">{product.title}</td>
