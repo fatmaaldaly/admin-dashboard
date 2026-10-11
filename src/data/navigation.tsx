@@ -39,12 +39,12 @@ export const menuItems = [
 export const generalItems = [
   {
     name: "Settings",
-    href: "/dashboard/settings",
+    href: "/settings",
     icon: <Settings size={20} />,
   },
   {
     name: "Support",
-    href: "/dashboard/support",
+    href: "/support",
     icon: <LifeBuoy size={20} />,
   },
 ];
