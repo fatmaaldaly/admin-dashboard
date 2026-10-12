@@ -9,11 +9,12 @@ import OrdersTableEmpty from "@/components/orders/OrdersTableEmpty";
 import OrdersTableSkeleton from "@/components/orders/OrdersTableSkeleton";
 import { getOrders } from "@/services/dashboardServices";
 import { useQuery } from "@tanstack/react-query";
+import { Suspense } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 const ORDERS_PER_PAGE = 5;
 
-export default function OrdersPage() {
+function OrdersPageContent() {
   const searchParams = useSearchParams();
   const searchQuery = searchParams.get("q") ?? "";
   const router = useRouter();
@@ -112,5 +113,20 @@ export default function OrdersPage() {
         />
       )}
     </div>
+  );
+}
+
+// useSearchParams needs a Suspense boundary for static prerendering
+export default function OrdersPage() {
+  return (
+    <Suspense
+      fallback={
+        <div className="p-10">
+          <OrdersTableSkeleton />
+        </div>
+      }
+    >
+      <OrdersPageContent />
+    </Suspense>
   );
 }

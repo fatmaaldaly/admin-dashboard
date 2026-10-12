@@ -4,11 +4,12 @@ import ProductsTable from "@/components/products/ProductsTable";
 import ProductsTableSkeleton from "@/components/products/ProductsTableSkeleton";
 import { getProducts } from "@/services/dashboardServices";
 import { useQuery } from "@tanstack/react-query";
+import { Suspense } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 const PRODUCTS_PER_PAGE = 5;
 
-export default function ProductsPage() {
+function ProductsPageContent() {
   const searchParams = useSearchParams();
   const searchQuery = searchParams.get("q") || "";
   const router = useRouter();
@@ -164,5 +165,20 @@ export default function ProductsPage() {
         onPageChange={handlePageChange}
       />
     </div>
+  );
+}
+
+// useSearchParams needs a Suspense boundary for static prerendering
+export default function ProductsPage() {
+  return (
+    <Suspense
+      fallback={
+        <div className="p-10">
+          <ProductsTableSkeleton />
+        </div>
+      }
+    >
+      <ProductsPageContent />
+    </Suspense>
   );
 }
