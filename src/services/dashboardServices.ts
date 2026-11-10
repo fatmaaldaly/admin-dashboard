@@ -14,14 +14,14 @@ import axios from "axios";
 
 export async function getStats() {
   const res = await axios.get<StatsResponse>(
-    "https://mocki.io/v1/01581b1d-6c81-4067-ad6f-fe0db1b732d0",
+    "https://dummyjson.com/c/2660-b413-43e7-93f1",
   );
   return res.data;
 }
 
 export async function getAnalysis() {
   const res = await axios.get<AnalysisResponse>(
-    "https://mocki.io/v1/695d9a5a-415f-4b0d-a8b3-0da38b86f29a",
+    "https://dummyjson.com/c/668c-8267-4edc-879d",
   );
   return res.data;
 }
@@ -54,7 +54,6 @@ export async function getTopProducts() {
   return res.data;
 }
 
-
 export async function getOrders() {
   const res = await axios.get<OrdersResponse>(
     "https://dummyjson.com/c/131e-1db1-4c6e-a575",
@@ -63,15 +62,15 @@ export async function getOrders() {
 }
 
 export async function getProducts() {
-  const res = await axios.get<ProductsResponse>("https://dummyjson.com/products");
+  const res = await axios.get<ProductsResponse>(
+    "https://dummyjson.com/products",
+  );
 
   return res.data;
 }
 
 export async function getProductById(id: string) {
-  const res = await axios.get<Product>(
-    `https://dummyjson.com/products/${id}`,
-  );
+  const res = await axios.get<Product>(`https://dummyjson.com/products/${id}`);
 
   return res.data;
 }
